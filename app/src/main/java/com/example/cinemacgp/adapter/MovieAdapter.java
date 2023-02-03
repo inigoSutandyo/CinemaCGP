@@ -39,7 +39,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         holder.getTitleView().setText(movie.getTitle());
         holder.getScoreView().setText(movie.getScore().toString());
         holder.getRatingView().setText(movie.getRating());
-        holder.getYearView().setText(movie.getYear().toString());
+        if (movie.getYear() == -1) {
+            holder.getYearView().setText("-");
+        } else {
+            holder.getYearView().setText(movie.getYear().toString());
+        }
+
         Glide.with(holder.itemView)
                 .load(movie.getImage())
                 .into(holder.getImageView());

@@ -15,16 +15,15 @@ import java.util.ArrayList;
 
 public class MovieController {
 
-    public static void fetchTop(Activity activity, IListener listener) {
+    public static void fetchTop(Activity activity, IListener listener, Integer page) {
         RequestQueue queue = Volley.newRequestQueue(activity);
-        String url =  UrlFetcher.getStringUrl("/top/anime");
+        String url =  UrlFetcher.getStringUrl("/top/anime?page=" + page);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
             ArrayList<Movie> movies = MovieParser.parseList(response);
             listener.onSuccess(movies.toArray(new Movie[0]));
         }, error -> {
-            String err = error.getMessage();
-            Log.d("API", err);
+            Log.d("API", error.toString());
         });
         queue.add(stringRequest);
     }

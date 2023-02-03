@@ -1,5 +1,6 @@
 package com.example.cinemacgp.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +42,8 @@ public class MovieFragment extends Fragment implements IRecyclerView, IListener 
     private ArrayList<Movie> movies;
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
-
+    private int page;
+    private boolean loading;
     public MovieFragment() {
         // Required empty public constructor
     }
@@ -73,14 +76,36 @@ public class MovieFragment extends Fragment implements IRecyclerView, IListener 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        page = 1;
+        loading = false;
         movies = new ArrayList<>();
-        MovieController.fetchTop(this.getActivity(), this);
+        MovieController.fetchTop(this.getActivity(), this, page);
         movieAdapter = new MovieAdapter(movies, this);
         recyclerView = view.findViewById(R.id.movie_recycler);
         recyclerView.setAdapter(movieAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (!loading && page <= 2) {
+                    LinearLayoutManager layoutManager=LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
+                    int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
+                    if (linearLayoutManager != null && lastVisible == movieAdapter.getItemCount() - 1) {
+                        loadMore();
+                        loading = true;
+                    }
+                }
+            }
+        });
+    }
+
+    private void loadMore() {
+        page += 1;
+        MovieController.fetchTop(this.getActivity(), this, page);
     }
 
     @Override
@@ -88,12 +113,20 @@ public class MovieFragment extends Fragment implements IRecyclerView, IListener 
 
     }
 
+
+
     @Override
     public void onSuccess(Movie... movies) {
+        if (movies.length < 1) {
+            return;
+        }
         for (Movie m :
                 movies) {
             this.movies.add(m);
         }
+        loading = false;
         movieAdapter.notifyDataSetChanged();
+
+        Log.d("SCROLL", "movie count: " + movieAdapter.getItemCount() + " page: " + page);
     }
 }

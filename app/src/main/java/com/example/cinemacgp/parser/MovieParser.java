@@ -17,11 +17,19 @@ public class MovieParser {
         try {
             JSONObject obj = new JSONObject(string);
             JSONArray data = obj.getJSONArray("data");
-            for (int i = 0; i < data.length(); i++) {
+            Log.d("SCROLL", "length: " + data.length());
+            int len = data.length();
+            for (int i = 0; i < 25; i++) {
                 JSONObject json = data.getJSONObject(i);
+                int year = -1;
                 int id = json.getInt("mal_id");
-                int year = json.getInt("year");
-                String title = json.getString("title_english");
+                try {
+                    year = json.getInt("year");
+                } catch (Exception e) {
+                    year = -1;
+                }
+
+                String title = json.getString("title");
                 String image =  json.getJSONObject("images")
                         .getJSONObject("jpg")
                         .getString("large_image_url");
@@ -29,11 +37,13 @@ public class MovieParser {
                 String type = json.getString("type");
                 String rating = json.getString("rating");
                 Double score = json.getDouble("score");
+//
                 movies.add(new Movie(id, year, score, synopsis, title, type, rating, image));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.d("SCROLL", "total: " + movies.size());
         return movies;
     }
 }
