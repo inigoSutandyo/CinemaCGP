@@ -114,7 +114,7 @@ public class HomeFragment extends Fragment implements IRecyclerView, IListener, 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (!loading && page <= 2) {
+                if (!loading) {
                     LinearLayoutManager layoutManager = LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
                     int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
                     if (layoutManager != null && lastVisible == movieAdapter.getItemCount() - 1) {
@@ -166,7 +166,7 @@ public class HomeFragment extends Fragment implements IRecyclerView, IListener, 
 
     @Override
     public void onSuccess(Movie... movies) {
-        if (movies.length < 1) {
+        if (movies == null || movies.length < 1) {
             return;
         }
         for (Movie m :

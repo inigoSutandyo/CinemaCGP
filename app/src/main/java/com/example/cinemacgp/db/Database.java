@@ -6,6 +6,7 @@ import com.example.cinemacgp.model.Movie;
 import com.example.cinemacgp.model.Theater;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class Database {
     /**
@@ -15,13 +16,13 @@ public class Database {
     private static volatile Database instance = null;
     private static Object obj = new Object();
 
-    private ArrayList<Movie> movies;
+    private Vector<Movie> movies;
     private ArrayList<Cinema> cinemas;
     private ArrayList<Booking> bookings;
 
     private Database() {
         bookings = new ArrayList<>();
-        movies = new ArrayList<>();
+        movies = new Vector<>();
         cinemas = new ArrayList<>();
     }
 
@@ -42,7 +43,7 @@ public class Database {
         return result;
     }
 
-    public ArrayList<Movie> getMovies() {
+    public Vector<Movie> getMovies() {
         return movies;
     }
 

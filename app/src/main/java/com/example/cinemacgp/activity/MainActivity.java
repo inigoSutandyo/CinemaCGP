@@ -13,11 +13,9 @@ import android.view.MenuItem;
 
 import com.example.cinemacgp.R;
 import com.example.cinemacgp.db.Database;
-import com.example.cinemacgp.fragment.CinemaFragment;
+import com.example.cinemacgp.fragment.BookingFragment;
 import com.example.cinemacgp.fragment.HomeFragment;
 import com.example.cinemacgp.interfaces.IFragment;
-import com.example.cinemacgp.model.Cinema;
-import com.example.cinemacgp.model.Theater;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements IFragment {
@@ -53,8 +51,8 @@ public class MainActivity extends AppCompatActivity implements IFragment {
             drawerLayout.close();
             if (item.getItemId() == R.id.home_nav && !isMovieFragment()) {
                 replaceFragment(new HomeFragment());
-            } else if (item.getItemId() == R.id.cinemas_nav && !isCinemaFragment()) {
-                replaceFragment(new CinemaFragment());
+            } else if (item.getItemId() == R.id.booking_nav && !isCinemaFragment()) {
+                replaceFragment(new BookingFragment());
             }
             return true;
         });
@@ -74,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements IFragment {
     }
 
     private boolean isCinemaFragment() {
-        boolean flag = getSupportFragmentManager().findFragmentByTag("FRAGMENT") instanceof CinemaFragment;
+        boolean flag = getSupportFragmentManager().findFragmentByTag("FRAGMENT") instanceof BookingFragment;
         return flag;
     }
 

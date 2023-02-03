@@ -6,6 +6,8 @@ import com.example.cinemacgp.model.Cinema;
 import com.example.cinemacgp.model.Movie;
 import com.example.cinemacgp.model.Theater;
 
+import java.util.ArrayList;
+
 public class CinemaController {
     private static Database database = Database.getInstance();
     public static Cinema getCinemaById(int id) {
@@ -14,5 +16,9 @@ public class CinemaController {
 
     public static void addBooking(String name, String email, Cinema cinema, Movie movie, Theater theater) {
         database.addBooking(new Booking(name,email,movie,cinema,theater));
+    }
+
+    public static ArrayList<Booking> getBookings() {
+        return database.getBookings();
     }
 }

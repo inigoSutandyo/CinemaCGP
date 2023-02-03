@@ -13,6 +13,7 @@ import com.example.cinemacgp.model.Movie;
 import com.example.cinemacgp.parser.MovieParser;
 import com.example.cinemacgp.util.UrlFetcher;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class MovieController {
 
@@ -22,14 +23,19 @@ public class MovieController {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
             ArrayList<Movie> movies = MovieParser.parseList(response);
-            listener.onSuccess(movies.toArray(new Movie[0]));
+            if (movies == null) {
+                listener.onSuccess(null);
+            } else {
+                listener.onSuccess(movies.toArray(new Movie[0]));
+            }
+
         }, error -> {
             Log.d("API", error.toString());
         });
         queue.add(stringRequest);
     }
 
-    public static ArrayList<Movie> getDatabaseMovies() {
+    public static Vector<Movie> getDatabaseMovies() {
         return Database.getInstance().getMovies();
     }
 

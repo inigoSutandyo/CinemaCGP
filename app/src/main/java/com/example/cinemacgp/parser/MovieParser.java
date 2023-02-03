@@ -18,8 +18,10 @@ public class MovieParser {
             JSONObject obj = new JSONObject(string);
             JSONArray data = obj.getJSONArray("data");
             Log.d("SCROLL", "length: " + data.length());
-            int len = data.length();
-            for (int i = 0; i < 25; i++) {
+            int page =  obj.getJSONObject("pagination")
+                    .getInt("current_page");
+            if (page >= 3) return null;
+            for (int i = 0; i < data.length(); i++) {
                 JSONObject json = data.getJSONObject(i);
                 int year = -1;
                 int id = json.getInt("mal_id");

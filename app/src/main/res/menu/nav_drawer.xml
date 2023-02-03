@@ -10,9 +10,9 @@
                 android:title="Home"
                 android:checkable="true"/>
             <item
-                android:id="@+id/cinemas_nav"
-                android:icon="@drawable/ic_baseline_cinemas_24"
-                android:title="Cinemas"
+                android:id="@+id/booking_nav"
+                android:icon="@drawable/ic_baseline_library_books_24"
+                android:title="Bookings"
                 android:checkable="true"/>
         </menu>
     </item>

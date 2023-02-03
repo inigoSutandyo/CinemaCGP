@@ -5,32 +5,38 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.cinemacgp.R;
 import com.example.cinemacgp.controller.CinemaController;
 import com.example.cinemacgp.controller.MovieController;
+import com.example.cinemacgp.interfaces.IFragment;
 import com.example.cinemacgp.interfaces.IListener;
 import com.example.cinemacgp.model.Cinema;
 import com.example.cinemacgp.model.Movie;
 import com.example.cinemacgp.model.Theater;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AddBookingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddBookingFragment extends Fragment implements IListener {
+public class AddBookingFragment extends Fragment implements IListener, IFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,7 +50,8 @@ public class AddBookingFragment extends Fragment implements IListener {
     private EditText nameTxt, emailTxt;
     private TextView cinemaTxt, errorTxt;
     private Cinema cinema;
-    private ArrayList<Movie> movies;
+    private Vector<Movie> movies;
+
     private int page;
     public AddBookingFragment() {
         // Required empty public constructor
@@ -87,7 +94,7 @@ public class AddBookingFragment extends Fragment implements IListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        movies = new ArrayList<>();
+        movies = new Vector<>();
         page = 1;
 
         Bundle bundle = getArguments();
@@ -123,15 +130,25 @@ public class AddBookingFragment extends Fragment implements IListener {
             Movie movie = (Movie) movieSpinner.getSelectedItem();
             Theater theater = (Theater) theaterSpinner.getSelectedItem();
             CinemaController.addBooking(name, email, cinema, movie, theater);
+            replaceFragment(new HomeFragment());
+        });
+
+        ImageView back = view.findViewById(R.id.booking_back);
+
+        back.setOnClickListener(view1 -> {
+            replaceFragment(new HomeFragment());
         });
 
         MovieController.fetchTop(this.getActivity(), this, page++);
 
     }
 
+
+
     private void populateMovieSpinner() {
-        ArrayAdapter<Movie> adapter = new ArrayAdapter<Movie>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, movies);
+        ArrayAdapter<Movie> adapter = new ArrayAdapter<Movie>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, MovieController.getDatabaseMovies());
         movieSpinner.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     private void populateTheaterSpinner() {
@@ -141,12 +158,28 @@ public class AddBookingFragment extends Fragment implements IListener {
 
     @Override
     public void onSuccess(Movie... movies) {
+//        this.movies.clear();
         this.movies = MovieController.getDatabaseMovies();
-        if (this.movies.size() >= 50 || page > 2) {
+        if (movies == null || this.movies.size() >= 50) {
+            Log.d("MOVIES", "before: " + MovieController.getDatabaseMovies().size());
             populateMovieSpinner();
             return;
         }
         MovieController.addAllMovies(movies);
         MovieController.fetchTop(this.getActivity(), this, page++);
+    }
+
+    @Override
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(
+                R.anim.slide_in,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.slide_out
+        );
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.commit();
     }
 }
