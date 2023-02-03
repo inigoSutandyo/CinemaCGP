@@ -99,7 +99,7 @@ public class Database {
                 new Theater(2, 223),
                 new Theater(3, 150)));
         addCinema(new Cinema(2, "Cinema CGP Beta", "Orange Street, West Avenue, 223",
-                6.20175020412279,
+                -6.20175020412279,
                 106.78223868546155,
                 new Theater(1, 100),
                 new Theater(2, 120),

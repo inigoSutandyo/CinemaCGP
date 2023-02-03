@@ -158,6 +158,12 @@ public class HomeFragment extends Fragment implements IRecyclerView, IListener, 
 
             if (action.equals("map")) {
                 // DO SOMETHING
+                Cinema cinema = cinemas.get(position);
+                Fragment fragment = new MapFragment();
+                Bundle args = new Bundle();
+                args.putInt("CINEMA_ID", cinema.getId());
+                fragment.setArguments(args);
+                replaceFragment(fragment);
             }
         }
     }
