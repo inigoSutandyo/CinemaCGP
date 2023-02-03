@@ -9,13 +9,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.cinemacgp.R;
-import com.example.cinemacgp.controller.MovieController;
 import com.example.cinemacgp.fragment.CinemaFragment;
-import com.example.cinemacgp.fragment.MovieFragment;
+import com.example.cinemacgp.fragment.HomeFragment;
 import com.example.cinemacgp.interfaces.IFragment;
 import com.google.android.material.navigation.NavigationView;
 
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements IFragment {
 
         initNavigation();
         selectItem();
-        replaceFragment(new MovieFragment());
+        replaceFragment(new HomeFragment());
 //        MovieController.fetchTop(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements IFragment {
         navigationView.setNavigationItemSelectedListener(item -> {
             drawerLayout.close();
             if (item.getItemId() == R.id.movies_nav && !isMovieFragment()) {
-                replaceFragment(new MovieFragment());
+                replaceFragment(new HomeFragment());
             } else if (item.getItemId() == R.id.cinemas_nav && !isCinemaFragment()) {
                 replaceFragment(new CinemaFragment());
             }
@@ -64,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements IFragment {
     }
 
     private boolean isMovieFragment() {
-        boolean flag = getSupportFragmentManager().findFragmentByTag("FRAGMENT") instanceof MovieFragment;
+        boolean flag = getSupportFragmentManager().findFragmentByTag("FRAGMENT") instanceof HomeFragment;
         return flag;
     }
 

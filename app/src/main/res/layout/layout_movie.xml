@@ -36,16 +36,26 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/movie_score"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:maxLines="1"
-                    android:maxLength="5"
-                    android:text="Score"
-                    android:textStyle="normal"
-                    android:textSize="16dp" />
+                    android:orientation="horizontal"
+                    android:layout_alignParentLeft="true">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_star_24_yellow"/>
+                    <TextView
+                        android:id="@+id/movie_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:maxLength="5"
+                        android:text="Score"
+                        android:textStyle="normal"
+                        android:textSize="18dp" />
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/movie_year"
                     android:layout_width="wrap_content"

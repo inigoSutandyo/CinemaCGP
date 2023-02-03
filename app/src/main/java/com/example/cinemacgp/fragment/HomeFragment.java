@@ -1,6 +1,5 @@
 package com.example.cinemacgp.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,10 +24,10 @@ import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MovieFragment#newInstance} factory method to
+ * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MovieFragment extends Fragment implements IRecyclerView, IListener {
+public class HomeFragment extends Fragment implements IRecyclerView, IListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,12 +43,12 @@ public class MovieFragment extends Fragment implements IRecyclerView, IListener 
     private MovieAdapter movieAdapter;
     private int page;
     private boolean loading;
-    public MovieFragment() {
+    public HomeFragment() {
         // Required empty public constructor
     }
 
-    public static MovieFragment newInstance(String param1, String param2) {
-        MovieFragment fragment = new MovieFragment();
+    public static HomeFragment newInstance(String param1, String param2) {
+        HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,7 +69,7 @@ public class MovieFragment extends Fragment implements IRecyclerView, IListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
