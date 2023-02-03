@@ -24,7 +24,7 @@ public class MovieParser {
                 String title = json.getString("title_english");
                 String image =  json.getJSONObject("images")
                         .getJSONObject("jpg")
-                        .getString("image_url");
+                        .getString("large_image_url");
                 String synopsis = json.getString("synopsis");
                 String type = json.getString("type");
                 String rating = json.getString("rating");
