@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements IFragment {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         database = Database.getInstance();
-        populateCinemas();
+        database.populateCinemas();
         initNavigation();
         selectItem();
         replaceFragment(new HomeFragment());
@@ -38,24 +38,7 @@ public class MainActivity extends AppCompatActivity implements IFragment {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void populateCinemas() {
-        /**
-         * Seeder function to populate cinema data
-         */
-        database.addCinema(new Cinema("Cinema CGP Alpha", "Apple Street, 701",
-                -6.193924061113853,
-                106.78813220277623,
-                new Theater(1, 120),
-                new Theater(2, 223),
-                new Theater(3, 150)));
-        database.addCinema(new Cinema("Cinema CGP Beta", "Orange Street, West Avenue, 223",
-                6.20175020412279,
-                106.78223868546155,
-                new Theater(1, 100),
-                new Theater(2, 120),
-                new Theater(3, 120),
-                new Theater(4, 150)));
-    }
+
 
     private void initNavigation() {
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -68,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements IFragment {
         NavigationView navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(item -> {
             drawerLayout.close();
-            if (item.getItemId() == R.id.movies_nav && !isMovieFragment()) {
+            if (item.getItemId() == R.id.home_nav && !isMovieFragment()) {
                 replaceFragment(new HomeFragment());
             } else if (item.getItemId() == R.id.cinemas_nav && !isCinemaFragment()) {
                 replaceFragment(new CinemaFragment());

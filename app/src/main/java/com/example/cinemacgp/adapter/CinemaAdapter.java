@@ -34,7 +34,9 @@ public class CinemaAdapter extends RecyclerView.Adapter<CinemaAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        Cinema cinema = cinemas.get(position);
+        holder.nameView.setText(cinema.getName());
+        holder.addressView.setText(cinema.getAddress());
     }
 
     @Override

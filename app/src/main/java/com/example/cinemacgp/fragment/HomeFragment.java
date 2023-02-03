@@ -96,10 +96,15 @@ public class HomeFragment extends Fragment implements IRecyclerView, IListener, 
         cinemaRecycler = view.findViewById(R.id.cinema_recycler);
         cinemas = new ArrayList<>();
         cinemaAdapter = new CinemaAdapter(cinemas, this);
+        if (database.isCinemasEmpty()) {
+            database.populateCinemas();
+        }
         cinemas.addAll(database.getCinemas());
         cinemaRecycler.setAdapter(cinemaAdapter);
         cinemaRecycler.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        cinemaRecycler.setNestedScrollingEnabled(false);
         cinemaAdapter.notifyDataSetChanged();
+
     }
 
     private void recyclerViewListener() {
