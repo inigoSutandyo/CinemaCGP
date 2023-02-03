@@ -23,4 +23,9 @@ public class Theater {
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
+
+    @Override
+    public String toString() {
+        return number + " - " + capacity + " people(s)";
+    }
 }

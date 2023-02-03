@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.cinemacgp.db.Database;
 import com.example.cinemacgp.interfaces.IListener;
 import com.example.cinemacgp.model.Movie;
 import com.example.cinemacgp.parser.MovieParser;
@@ -26,5 +27,16 @@ public class MovieController {
             Log.d("API", error.toString());
         });
         queue.add(stringRequest);
+    }
+
+    public static ArrayList<Movie> getDatabaseMovies() {
+        return Database.getInstance().getMovies();
+    }
+
+    public static void addAllMovies(Movie... movies) {
+        for (Movie m :
+                movies) {
+            Database.getInstance().addMovie(m);
+        }
     }
 }

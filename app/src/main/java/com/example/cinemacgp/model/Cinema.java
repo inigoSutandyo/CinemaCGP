@@ -5,18 +5,27 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class Cinema {
+    private int id;
     private String name;
     private String address;
     private Double latitude, longitude;
     private ArrayList<Theater> theaters;
 
-    public Cinema(String name, String address, Double latitude, Double longitude, Theater... theaters) {
+    public Cinema(int id, String name, String address, Double latitude, Double longitude, Theater... theaters) {
+        this.id = id;
         this.name = name;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
         this.theaters = new ArrayList<>();
         this.theaters.addAll(Arrays.asList(theaters));
+    }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -146,8 +148,12 @@ public class HomeFragment extends Fragment implements IRecyclerView, IListener, 
     public void onItemClick(int position, String action, String source) {
         if (source.equals("cinema")) {
             if (action.equals("book")) {
-                // Do something
-
+                Cinema cinema = cinemas.get(position);
+                Fragment fragment = new AddBookingFragment();
+                Bundle args = new Bundle();
+                args.putInt("CINEMA_ID", cinema.getId());
+                fragment.setArguments(args);
+                replaceFragment(fragment);
             }
 
             if (action.equals("map")) {
@@ -175,6 +181,15 @@ public class HomeFragment extends Fragment implements IRecyclerView, IListener, 
 
     @Override
     public void replaceFragment(Fragment fragment) {
-
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(
+                R.anim.slide_in,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.slide_out
+        );
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.commit();
     }
 }
