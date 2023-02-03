@@ -12,25 +12,49 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.cinemacgp.R;
+import com.example.cinemacgp.db.Database;
 import com.example.cinemacgp.fragment.CinemaFragment;
 import com.example.cinemacgp.fragment.HomeFragment;
 import com.example.cinemacgp.interfaces.IFragment;
+import com.example.cinemacgp.model.Cinema;
+import com.example.cinemacgp.model.Theater;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements IFragment {
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout drawerLayout;
+    private Database database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        database = Database.getInstance();
+        populateCinemas();
         initNavigation();
         selectItem();
         replaceFragment(new HomeFragment());
-//        MovieController.fetchTop(this);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void populateCinemas() {
+        /**
+         * Seeder function to populate cinema data
+         */
+        database.addCinema(new Cinema("Cinema CGP Alpha", "Apple Street, 701",
+                -6.193924061113853,
+                106.78813220277623,
+                new Theater(1, 120),
+                new Theater(2, 223),
+                new Theater(3, 150)));
+        database.addCinema(new Cinema("Cinema CGP Beta", "Orange Street, West Avenue, 223",
+                6.20175020412279,
+                106.78223868546155,
+                new Theater(1, 100),
+                new Theater(2, 120),
+                new Theater(3, 120),
+                new Theater(4, 150)));
     }
 
     private void initNavigation() {
